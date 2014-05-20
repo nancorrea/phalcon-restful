@@ -4,11 +4,11 @@ namespace App\Modules\Frontend\Controllers;
 use \App\Models\Services\Services as Services;
 use Phalcon\Mvc\Controller;
 
-class IndexController extends Controller
+class UserController extends Controller
 {
 	public function indexAction()
 	{
-		$this->response->redirect('get');
+		$this->response->redirect('user/get');
 		/*
 		 * Backend example call
 		 *

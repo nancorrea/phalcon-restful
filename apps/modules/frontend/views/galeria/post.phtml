@@ -1,5 +1,7 @@
 <script>
-	var single_request = false; 
+	var single_request = false;
+	
+	 
 	$(function() {
 		//submit forms		
 		$('#requestForm').submit(function() {
@@ -13,7 +15,13 @@
 			});
 			return false;
 		});
+		
+		$("#photo").change(function(e){
+ 			$(this).prepareSend(e);
+		});
 	});
+	
+	
 </script>
 
 <div class="jumbotron">
@@ -21,7 +29,9 @@
 		<form id="requestForm">
 		<div class="row">
 			<h2>POST</h2>
-			
+			<div class="input-group input-group-sm">
+			  <input type="file" class="form-control" name="photo" placeholder="photo" id="photo">
+			</div>
 			<div class="input-group input-group-sm">
 			  <input type="text" class="form-control" name="nm_user" placeholder="name">
 			</div>

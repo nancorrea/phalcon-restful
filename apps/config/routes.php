@@ -22,8 +22,13 @@ $router->add("/api/crud/:params", array(
 ));
 
 
-$router->add('/:action',array(
+$router->add('/user/:action',array(
 	'module' 		=> 'frontend',
-	'controller' 	=> 'index',
+	'controller' 	=> 'user',
+	'action' 		=> '1'
+));
+$router->add('/galeria/:action',array(
+	'module' 		=> 'frontend',
+	'controller' 	=> 'galeria',
 	'action' 		=> '1'
 ));
