@@ -4,7 +4,7 @@
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!-->
-<html class="no-js">
+<html class="no-js" ng-app="myApp">
 	<!--<![endif]-->
 	<head>
 		<meta charset="utf-8">
@@ -29,6 +29,7 @@
 			window.jQuery || document.write('<script src="js/vendor/jquery-1.10.1.min.js"><\/script>')
 		</script>
 		<script src="<?= $config->application->baseUri?>js/vendor/bootstrap.min.js"></script>
+		<script src="<?= $config->application->baseUri?>js/angular.min.js"></script>
 		<script src="<?= $config->application->baseUri?>js/main.js"></script>
 	</head>
 	<body>

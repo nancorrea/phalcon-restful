@@ -27,6 +27,7 @@ class UserController extends Controller
 		exit;*/
 	}
 	public function getAction() {
+        
 	}
 	public function postAction() {
 	}
