@@ -1,40 +1,54 @@
 <script>
-	var single_request = false;
-	
+	var single_request = false; 
 	$(function() {
 		//submit forms		
 		$('#requestForm').submit(function() {
-			
-			$(this).doPost('/api/crud/galeria', function(){
-				
-				$('.response pre').html(request.responseText);
-				
+			$.ajax({
+				url: $('.uri').val(),
+				type: 'POST',
+				data: $('#requestForm').serialize(),
+				complete: function(request, json) {
+					$('.response pre').html(request.responseText);		
+				}
 			});
-			
 			return false;
 		});
-		
-		$("#photo").change(function(e){
- 			$(this).prepareSend(e);
-		});
 	});
-	
-	
 </script>
 
 <div class="jumbotron">
 	<div class="container">
 		<form id="requestForm">
 		<div class="row">
+			<a href="/user/get" class="btn btn-warning">GET</a>
+			<a href="/user/post" class="btn btn-success">POST</a>
+			<a href="/user/put" class="btn btn-info">PUT</a>
+			<a href="/user/delete" class="btn btn-danger">DELETE</a>
+			<br><br>
+			
 			<h2>POST</h2>
-			
 			<div class="input-group input-group-sm">
-			  <input type="text" class="form-control" name="nm_galeria" placeholder="name">
+			  <input type="text" class="form-control" name="nm_user" placeholder="name">
 			</div>
 			<div class="input-group input-group-sm">
-			  <input type="file" class="form-control" name="photo" placeholder="photo" id="photo">
+			  <input type="text" class="form-control" name="em_user" placeholder="email">
+			</div>
+			<div class="input-group input-group-sm">
+			  <select class="form-control" name="role" placeholder="role">
+			  		<option value="">role</option>
+			  		<option>admin</option>
+			  		<option>moderator</option>
+			  		<option>user</option>
+			  </select>
+			</div>
+			<div class="input-group input-group-sm">
+			  <input type="text" class="form-control" name="username" placeholder="username">
+			</div>
+			<div class="input-group input-group-sm">
+			  <input type="text" class="form-control" name="password" placeholder="password">
 			</div>
 			
+			<small>persist data</small>
 			<div class="form-group">
 				<input type="text" readonly="readonly" class="form-control uri" value="http://<?= $_SERVER['HTTP_HOST']?>/api/crud/user">
 				<button type="submit" class="btn btn-success">DO HTTP REQUEST</button>
