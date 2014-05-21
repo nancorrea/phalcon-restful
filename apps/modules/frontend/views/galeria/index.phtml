@@ -30,7 +30,6 @@
 						
 						$('.imagesPreview').prepend(template);
                     }
-
                     element.val('');
                 });
             }
@@ -48,7 +47,6 @@
         		url:	"/api/crud/galeria",
         		data:   $("#postForm").serialize(),
         		complete: function(request, json){
-        			
         			
         			var scope = angular.element($("#galeriaController")).scope();
         			try {
@@ -80,7 +78,6 @@
     });
 
 	var appModule = angular.module('myApp',[]);
-	
 	appModule.service('crudService', function( $rootScope, $http ) {
 	    
 	    this.list = function( apiUri ) {
@@ -115,10 +112,7 @@
             });
 	    }
 	});
-	
-	
 </script>
-
 
 <style>
 	.img{
@@ -131,7 +125,6 @@
 		min-width:900px;
 	}
 </style>
-
 
 <div class="jumbotron" ng-app="myApp">
 	<div class="container" id="galeriaController" ng-controller="galeriaController" ng-init="list()">
@@ -166,9 +159,8 @@
 				<div style="clear:both"/>     	
             </div>
 		</div>
-		
 		<br><br><br>
-		<small>get response</small>
+		<h2>GET</h2>
         <pre style="width:100%;">{{ galerias }}</pre> 		
 	</div>
 </div>	

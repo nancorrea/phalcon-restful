@@ -1,9 +1,7 @@
 <?php
 namespace App\Modules\Frontend\Controllers;
 
-use \App\Models\Services\Services as Services;
 use Phalcon\Mvc\Controller;
-
 class UserController extends Controller
 {
 	public function indexAction()
