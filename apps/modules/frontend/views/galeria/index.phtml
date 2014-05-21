@@ -1,0 +1,175 @@
+<script>
+
+	(function($){
+        $.base64encode = function(value,callback) 
+        {
+            var reader = new FileReader();
+            reader.onload = callback;
+            reader.readAsDataURL(value);
+        },
+        $.fn.prepareSend = function(e) 
+        {
+            element = $(this);
+            if( 
+                element.data('limit') == 'n' ||
+                element.parents('form').find('input[name=\'images[]\']').length < element.data('limit')
+            ) {
+                $.base64encode(e.target.files[0], function(e){
+                    
+                    img = e.target.result;
+					element.parents('form').append('<input type="hidden" name="images[]" value="'+img+'" />');                   
+                    
+                    if ( $('.imagesPreview').length > 0 ){
+						
+						var template = '\
+						<div class="col-xs-3 img" ng-repeat="image in galeria.images">\
+							<a href="#" class="thumbnail">\
+								<img src="'+img+'"/>\
+							</a>\
+						</div>';
+						
+						$('.imagesPreview').prepend(template);
+                    }
+
+                    element.val('');
+                });
+            }
+        }
+    }) ( jQuery );
+
+	$(function() {
+        $("#photo").change(function(e){
+            $(this).prepareSend(e);
+        });
+        $('#postForm').submit(function(){
+        	$.ajax({
+        		
+        		method: "POST",
+        		url:	"/api/crud/galeria",
+        		data:   $("#postForm").serialize(),
+        		complete: function(request, json){
+        			
+        			
+        			var scope = angular.element($("#galeriaController")).scope();
+        			try {
+        				response = $.parseJSON(request.responseText);
+        				
+        				if(response.status == 'success') {
+        					scope.list();
+        					$("#postForm").find('input[name=\'images[]\']').remove();
+        					$("#postForm")[0].reset();
+        					$(".imagesPreview .img").remove();
+        				}
+						
+        				scope.$apply(function(){
+					        scope.message = response.message;
+					    });
+        				
+        			} catch ( e ) {
+        				
+        				scope.$apply(function(){
+					        scope.message = 'Parsing response error';
+					    });
+        				console.log(e);
+        			}
+        		}
+        	});
+        	return false;
+        });
+        
+    });
+
+	var appModule = angular.module('myApp',[]);
+	
+	appModule.service('crudService', function( $rootScope, $http ) {
+	    
+	    this.list = function( apiUri ) {
+	        return $http.get(apiUri);
+	    }
+	    /*this.save = function(obj, apiUri) {
+	        post = $http({
+	           method: 'POST',
+	           url: apiUri,
+	           data: $.param(obj)
+	        });
+	        post.success(function ( response ) 
+	        {
+	            $rootScope.message = response.message;
+	            if( response.status != 'success' ) {
+	                $rootScope.result = false;
+	            }
+	        });
+	        return $rootScope.result !== false ? post : false; 
+	    }*/
+	});
+	
+	appModule.controller('galeriaController', function( $rootScope, $scope, $http, crudService ) {
+	    
+	    $scope.apiUri = '/api/crud/galeria';
+	    $scope.galerias = [{}];
+	    
+	    $scope.list = function() 
+	    {
+            crudService.list($scope.apiUri).then(function ( response ) {
+                $scope.galerias = response.data
+            });
+	    }
+	});
+	
+	
+</script>
+
+
+<style>
+	.img{
+		height:150px !important; margin:20px 0px !important;
+	}
+	.img img{
+		height:150px !important;
+	}
+	.container{
+		min-width:900px;
+	}
+</style>
+
+
+<div class="jumbotron" ng-app="myApp">
+	<div class="container" id="galeriaController" ng-controller="galeriaController" ng-init="list()">
+		
+		<div class="row">
+			<div id="messages" ng-show="message">{{ message }}</div>
+			<h2>POST</h2>
+			<form method="POST" id="postForm" action="/api/crud/galeria">
+			    <div class="input-group input-group-sm">
+                    <input type="file" class="form-control" id="photo" data-limit="n">
+                </div>
+                <div class="input-group input-group-sm">
+                    <input type="text" class="form-control" ng-model="newGaleria.nm_galeria" name="nm_galeria" placeholder="nm_galeria">
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success">DO HTTP REQUEST</button>
+                </div>
+            </form>
+            
+			<div class="imagesPreview">
+				<div style="clear:both"></div>
+			</div>
+		</div>
+		<div class="row">
+			<div ng-repeat="galeria in galerias">
+				<h4>{{ galeria.nm_galeria}}</h4>      
+				<div class="col-xs-3 img" ng-repeat="image in galeria.images">
+					<a href="#" class="thumbnail">
+						<img src="/files/{{ image.cm_dir }}/{{ image.cm_foto }}"/>
+					</a>
+				</div> 
+				<div style="clear:both"/>     	
+            </div>
+		</div>
+		
+		<br><br><br>
+		<small>get response</small>
+        <pre style="width:100%;">{{ galerias }}</pre> 		
+	</div>
+</div>	
+

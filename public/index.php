@@ -47,9 +47,11 @@ try {
 	$loader = new \Phalcon\Loader();
 	$loader->registerDirs(
 		array(
-			$config->application->libraryDir
+			$config->application->libraryDir,
+			$config->application->modelsEntitiesDir
 		)
-	)->register();
+	);
+	$loader->register();
 	
 	
     //Handle Request

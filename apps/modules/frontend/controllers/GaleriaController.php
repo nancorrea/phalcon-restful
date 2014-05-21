@@ -8,11 +8,8 @@ class GaleriaController extends Controller
 {
 	public function indexAction()
 	{
-		$this->response->redirect('galeria/get');
 		/*
 		 * Backend example call
-		 *
-		 * 
 		$options = array(
 		    'http' => array(
 		        'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
@@ -25,16 +22,6 @@ class GaleriaController extends Controller
 		header('Content-Type: application/json');
 		echo $result;
 		exit;*/
-	}
-	public function getAction() {
-	    
-        
-	}
-	public function postAction() {
-	}
-	public function putAction() {
-	}
-	public function deleteAction() {
 	}
 }
 

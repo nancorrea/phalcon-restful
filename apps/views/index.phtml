@@ -4,7 +4,7 @@
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!-->
-<html class="no-js" ng-app="myApp">
+<html class="no-js">
 	<!--<![endif]-->
 	<head>
 		<meta charset="utf-8">
@@ -24,10 +24,8 @@
 		<link rel="stylesheet" href="<?= $config->application->baseUri?>css/main.css">
 
 		<script src="<?= $config->application->baseUri?>js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
-		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
-		<script>
-			window.jQuery || document.write('<script src="js/vendor/jquery-1.10.1.min.js"><\/script>')
-		</script>
+		<!--<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>-->
+		<script src="<?= $config->application->baseUri?>js/vendor/jquery-1.10.1.min.js"></script>
 		<script src="<?= $config->application->baseUri?>js/vendor/bootstrap.min.js"></script>
 		<script src="<?= $config->application->baseUri?>js/angular.min.js"></script>
 		<script src="<?= $config->application->baseUri?>js/main.js"></script>
@@ -39,21 +37,15 @@
 		<div class="navbar navbar-inverse navbar-fixed-top">
 			<div class="container">
 				<div class="navbar-header">
-					<a class="navbar-brand" href="/">RESTFull API</a>
+					<a class="navbar-brand" href="/">RESTFul API</a>
 				</div>
 				<div class="navbar-collapse collapse">
 					<ul class="nav navbar-nav">
-						<li <?= $_SERVER['REQUEST_URI'] == '/get' ? 'class="active"' : ''?>>
-							<a href="/get">GET</a>
+						<li <?= strpos($_SERVER['REQUEST_URI'], '/galeria') !== false ? 'class="active"' : ''?>>
+							<a href="/galeria">GALERIA</a>
 						</li>
-						<li <?= $_SERVER['REQUEST_URI'] == '/post' ? 'class="active"' : ''?>>
-							<a href="/post">POST</a>
-						</li>
-						<li <?= $_SERVER['REQUEST_URI'] == '/put' ? 'class="active"' : ''?>>
-							<a href="/put">PUT</a>
-						</li>
-						<li <?= $_SERVER['REQUEST_URI'] == '/delete' ? 'class="active"' : ''?>>
-							<a href="/delete">DELETE</a>
+						<li <?= strpos($_SERVER['REQUEST_URI'], '/user') !== false ? 'class="active"' : ''?>>
+							<a href="/user/get">USER</a>
 						</li>
 					</ul>
 				</div>
@@ -71,15 +63,5 @@
 				developed by nancorrea - divea.com.br
 			</p>
 		</footer>
-
-		<script>
-			var _gaq = [['_setAccount', 'UA-XXXXX-X'], ['_trackPageview']]; ( function(d, t) {
-					var g = d.createElement(t), s = d.getElementsByTagName(t)[0];
-					g.src = '//www.google-analytics.com/ga.js';
-					s.parentNode.insertBefore(g, s)
-				}(document, 'script'));
-		</script>
 	</body>
 </html>
-
-
